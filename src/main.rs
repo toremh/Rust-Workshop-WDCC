@@ -1,3 +1,14 @@
+use std::sync::Arc;
+use axum::{extract::State, routing::get, Router}
+use tokio::sync::Mutex;
+
+#[tokio::main]
+async fn main() {
+    tracing_subscriber::fmt::init();
+    let app = Router::new()
+      .route("/", get(root))
+      .with_state(Arc::new(Mutex::new(Vec::<Coffee>::new())));
+
 #[derive(serde::Deserialize)]
 enum CoffeeType{
     FlatWhite,
